@@ -1,5 +1,5 @@
-# Automatic Number Plate Recognition in browser with Tensorflow.js
-**The model can be used on other platforms (mobile, desktop) too**
+# Automatic Number Plate Recognition on web with Tensorflow.js
+**The model can be used on other platforms (mobile, desktop) too.**
 
 This project uses [Darknet by AlexeyAB]() the framework behind [Yolo - Object detection framework]() to train a model on custom dataset to recognize objects of our choice.
 
@@ -29,7 +29,21 @@ Where `image_1.jpg` is an image file... a photo of some object. Other image form
 The `image_1.txt` accompained by the image file must be of following format:
 ```<object-class> <x_center> <y_center> <width> <height>```
 
-The `<object-class>` is id of the class that appears in `image_1.jpg` photo. If total number of classes (object types) that you want to detect is `numClasses`. Then `<object-class>` is between `0` and `numClasses - 1`.
+* `<object-class>` is id of the class that appears in `image_1.jpg` photo. If total number of classes (object types) that you want to detect is `numClasses`. Then `<object-class>` is between `0` and `numClasses - 1`.
+
+* `<x_center> <y_center> <width> <height>` - float values relative to width and height of image, it can be equal from (0.0 to 1.0]
+
+* For example: `<x> = <absolute_x> / <image_width>` or `<height> = <absolute_height> / <image_height>`
+
+* Attention: `<x_center> <y_center>` - are center of rectangle (are not top-left corner)
+
+
+For example, for `image_1.jpg` you create `image_1.txt` containing:
+```txt
+1 0.716797 0.395833 0.216406 0.147222
+0 0.687109 0.379167 0.255469 0.158333
+1 0.420312 0.395833 0.140625 0.166667
+```
 
 
 ## 2. Project setup
@@ -45,8 +59,7 @@ make GPU=1
 ```
 
 ## 3. Configure for training
-The steps are copied from [steps described in darknet](link to steps)
-These steps are copied from [Darknet by AlexeyAB](https://github.com/AlexeyAB/darknet) [TODO<set #link here>].
+The steps are copied and adjusted from [steps described in darknet](https://github.com/AlexeyAB/darknet#how-to-train-to-detect-your-custom-objects).
 
 ### 3.1. Make a copy of tiny yolo config file 
 Our config (cfg) file will be called `yolov4-tiny-obj.cfg`
@@ -57,7 +70,7 @@ cp darknet/cfg/yolov4-tiny-custom.cfg darknet/cfg/yolov4-tiny-obj.cfg
 Do the following changes to our `darknet/cfg/yolov4-tiny-obj.cfg`
 
 1. Set `subdivisions=16`
-2. Set `max_batches=6000`
+2. Set `max_batches=2000`
 3. Set `steps=4800,5400`
 4. Set `classes=1` in all 2 `[yolo]` layes
 5. Change `[filters=255]` to filters=(classes + 5)x3 in the 2 `[convolutional]` before each [yolo] layer, keep in mind that it only has to be the last `[convolutional]` before each of the `[yolo]` layers. In our case `filters=18` since `(1+5)*3 = 18`
@@ -70,13 +83,15 @@ Create `obj.names` in the directory `darknet/build/darknet/x64/data/` with objec
 echo "NumberPlate" > darknet/build/darknet/x64/data/obj.names
 ```
 
+(Try to avoid adding any newline to this file. Can cause some bugs down the line)
+
 ### 3.3. Create `obj.data` file
 Create `obj.data` in the directory `darknet/build/darknet/x64/data/`. (Here classes = number of objects in our dataset).
 ```sh
 touch darknet/build/darknet/x64/data/obj.data
 ```
 
-Add the following content in this file using vim or visual editor
+Add the following content in this file using vim or some text editor
 
 ```txt
 classes = 1
@@ -102,9 +117,9 @@ cp /content/NumberPlates/* /content/darknet/build/darknet/x64/data/obj/
 And add (absolute) filenames of your images to it. (Even though we copied our dataset to `darknet/build/darknet/x64/data/obj/`, providing absolute paths will save you from debugging path issues).
 
 ```txt
-darknet/build/darknet/x64/data/obj/image_1.jpg
-darknet/build/darknet/x64/data/obj/image_2.jpg
-darknet/build/darknet/x64/data/obj/image_3.jpg
+/content/darknet/build/darknet/x64/data/obj/image_1.jpg
+/content/darknet/build/darknet/x64/data/obj/image_2.jpg
+/content/darknet/build/darknet/x64/data/obj/image_3.jpg
 .
 .
 .
@@ -140,12 +155,12 @@ drive.mount('/content/gdrive')
 
 2. Now train your mode with command described in above section
 ```sh
-! ./darknet detector train ...
+!./darknet detector train ...
 ```
 
 3. Save all weights in `/content/darknet/backup/` to your specified directory
 ```sh
-! cp /content/darknet/backup/* /content/gdrive/My\ Drive/Colab\ Notebooks/
+!cp /content/darknet/backup/* /content/gdrive/My\ Drive/Colab\ Notebooks/
 ```
 
 IMPORTANT: After you run the train command (step 2), also click to run the cell that copies your model to Google Drive (step 3). This way, the copy command will run right after your training command completes. Make sure your Google Drive folder path is correct.
@@ -154,6 +169,11 @@ IMPORTANT: After you run the train command (step 2), also click to run the cell 
 ## 5. Convert model to work with TensorFlow.js
 To run the inferences on the web, we need to convert our custom yolo model's weights to a format that TensorFlow.js recognizes.
 
+# implement
+create all the configruaiotn steps files
+put in this repo
+import in colab for faster usage & references
+convert model to tfjs!!!
 
 
 # TODO:
