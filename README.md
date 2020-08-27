@@ -1,6 +1,9 @@
 # Automatic Number Plate Recognition on web with Tensorflow.js
-* **These steps can be followed to train Yolo on any custom object detection dataset and run it on web**
-* **Also, the provided model can be converted to be used on other platforms (mobile, desktop) too**
+
+[STATUS: Model to detect number plates has been trained & can be [downloaded](./weights/). Next update will include running it on web using TF.js]
+
+* These steps can be followed to train Yolo on any custom object detection dataset and run it on web
+* Also, the provided model can be converted to be used on other platforms (mobile, desktop) too
 
 This project uses [Darknet by AlexeyAB]() the framework behind [Yolo - Object detection framework]() to train a model on custom dataset to recognize objects of our choice.
 
