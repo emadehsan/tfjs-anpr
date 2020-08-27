@@ -97,8 +97,8 @@ Add the following content in this file using vim or some text editor
 ```txt
 classes = 1
 train  = /content/darknet/build/darknet/x64/data/train.txt
-valid  = /content/darknet/build/darknet/x64/data/data/test.txt
-names = /content/darknet/build/darknet/x64/data/data/obj.names
+valid  = /content/darknet/build/darknet/x64/data/test.txt
+names = /content/darknet/build/darknet/x64/data/obj.names
 backup = /content/darknet/backup/
 ```
 
@@ -112,9 +112,7 @@ mkdir -p /content/darknet/build/darknet/x64/data/obj/
 cp /content/NumberPlates/* /content/darknet/build/darknet/x64/data/obj/
 ```
 
-### *TODO step 5? check from orginial repo
-
-### 3.6. Create `train.txt` file in `darknet/build/darknet/x64/data/`
+### 3.5. Create `train.txt` file in `darknet/build/darknet/x64/data/`
 And add (absolute) filenames of your images to it. (Even though we copied our dataset to `darknet/build/darknet/x64/data/obj/`, providing absolute paths will save you from debugging path issues).
 
 ```txt
@@ -128,7 +126,7 @@ And add (absolute) filenames of your images to it. (Even though we copied our da
 
 [You can use a little python script to read all `.jpg` files from dataset dir and put their absolute paths in `train.txt`]
 
-### 3.7. Download pre-trained weights
+### 3.6. Download pre-trained weights
 Download pre-trained weights for the convolutional layers of the Yolo model you want to use and put to the directory `darknet/build/darknet/x64/`
 
 ```sh
@@ -169,15 +167,3 @@ IMPORTANT: After you run the train command (step 2), also click to run the cell 
 
 ## 5. Convert model to work with TensorFlow.js
 To run the inferences on the web, we need to convert our custom yolo model's weights to a format that TensorFlow.js recognizes.
-
-# implement
-create all the configruaiotn steps files
-put in this repo
-import in colab for faster usage & references
-convert model to tfjs!!!
-
-
-# TODO:
-* Provide .cfg, .names, .data files in this repo
-* Provide link to our yolo trained model from alternate.parts server
-* Provide link to our converted tfjs model from alternate.parts server
