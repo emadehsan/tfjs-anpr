@@ -1,7 +1,8 @@
 # Automatic Number Plate Recognition on web with Tensorflow.js
 
-[STATUS: Model to detect number plates has been trained & can be [downloaded](./weights/). Next update will include running it on web using TF.js]
+*[STATUS: You can download trained [model to detect number plates](./weights/tiny-car.weights). Next update will include running it on web using TF.js]*
 
+**About**
 * These steps can be followed to train Yolo on any custom object detection dataset and run it on web
 * Also, the provided model can be converted to be used on other platforms (mobile, desktop) too
 
@@ -170,3 +171,5 @@ IMPORTANT: After you run the train command (step 2), also click to run the cell 
 
 ## 5. Convert model to work with TensorFlow.js
 To run the inferences on the web, we need to convert our custom yolo model's weights to a format that TensorFlow.js recognizes.
+
+[TO BE ADDED]
